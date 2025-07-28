@@ -33,13 +33,16 @@ app.use(cors({
 }));
 
 // ✅ 1. Ensure 'uploads' folder exists for storing product images
-const uploadDir = '/var/www/Drnkly/images/uploads';
+//const uploadDir = '/var/www/Drnkly/images/uploads';
+const uploadDir = path.join(__dirname, 'uploads');
+
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
   console.log('✅ uploads/ folder created');
 }
 
-app.use('/uploads', express.static('/var/www/Drnkly/images/uploads'));
+//app.use('/uploads', express.static('/var/www/Drnkly/images/uploads'));
+app.use('/uploads', express.static(uploadDir));
 // This serves files from the 'uploads' folder
 
 app.use(bodyParser.json());
