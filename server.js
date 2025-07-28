@@ -27,7 +27,8 @@ app.use(cors({
     'https://vendor.peghouse.in',
     'https://vendor.peghouse.in/api',
     'https://peghouse.in',
-    'http://localhost:5001'
+    'http://localhost:5001',
+    'https://drnkly-fe.vercel.app'
   ],
   credentials: true
 }));
