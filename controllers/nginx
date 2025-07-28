@@ -1,0 +1,41 @@
+server {
+    if ($host = vendor.peghouse.in) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name vendor.peghouse.in www.vendor.peghouse.in;
+
+    return 301 https://$host$request_uri;
+
+
+}
+
+server {
+    listen 443 ssl;
+    server_name vendor.peghouse.in;
+
+    root /var/www/Drnkly/VENDORDASHBOARD/Frontend/dist;  # <-- Ensure this is the Vendor's build folder
+    index index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+
+location /api/ {
+        proxy_pass http://localhost:5001/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+
+    ssl_certificate /etc/letsencrypt/live/vendor.peghouse.in/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/vendor.peghouse.in/privkey.pem; # managed by Certbot
+}
